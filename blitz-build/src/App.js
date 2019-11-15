@@ -8,6 +8,7 @@ import Dashboard from "./components/dashboard/index";
 import Tasks from './views/tasks/Tasks'
 import Projects from "./components/projects/Projects";
 import IndividualProject from "./components/projects/IndividualProject";
+import DelayLog from "./components/delayLog/DelayLog"
 //SWITCH INDEX TO DASHBOARD AFTER LC CHANGES HIS FILE NAME
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
         <Route exact path="/tasks" component={Tasks} />
         <Route exact path="/projects" component={Projects} />
         <Route exact path="/project/:id" component={IndividualProject} />
+        <Route exact path="/delaylog" component={DelayLog} />
       </Switch>
     </Router>
   );
