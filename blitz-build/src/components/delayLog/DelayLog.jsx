@@ -1,31 +1,33 @@
 import React, { useState,useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { ExportToCsv } from "export-to-csv";
 import Global from "../../styles/Global";
 
 import DelayLogCard from "./DelayLogCard";
 
 const delayLogDummyData = [
-  // {
-  //   projectId: "orc",
-  //   projectName: "orc",
-  //   reason: "i don't know",
-  //   taskId: "-LtkXMRfFmz3tdS9U34Z",
-  //   taskName: "finish the flooring",
-  //   timestamp: "November 15, 2019 11:36 AM",
-  //   uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
-  //   username: "joe@smith.com"
-  // },
-  // {
-  //   projectId: "orc2",
-  //   projectName: "orc2",
-  //   reason: "i don't know",
-  //   taskId: "-LtkXMRfFmz3tdS9U34Z",
-  //   taskName: "finish painting",
-  //   timestamp: "November 15, 2019 11:36 AM",
-  //   uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
-  //   username: "joe@smith.com"
-  // }
+  {
+    projectId: "orc",
+    projectName: "orc",
+    reason: "i don't know",
+    taskId: "-LtkXMRfFmz3tdS9U34Z",
+    taskName: "finish the flooring",
+    timestamp: "November 15, 2019 11:36 AM",
+    uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
+    username: "joe@smith.com"
+  },
+  {
+    projectId: "orc2",
+    projectName: "orc2",
+    reason: "i don't know",
+    taskId: "-LtkXMRfFmz3tdS9U34Z",
+    taskName: "finish painting",
+    timestamp: "November 15, 2019 11:36 AM",
+    uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
+    username: "joe@smith.com"
+  }
+
 ];
 
 const DelayLogTop = styled.div`
@@ -157,13 +159,32 @@ function DelayLog() {
       console.log(err);
     });
   }, [])
+
+  function handleExportCSV() {
+    const options = {
+      fieldSeparator: ",",
+      quoteStrings: '"',
+      decimalSeparator: ".",
+      showLabels: true,
+      showTitle: true,
+      title: "Delay_Log CSV",
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true
+      // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+        };
+      const csvExporter = new ExportToCsv(options);
+ 
+     csvExporter.generateCsv(delayLogDummyData);
+    };
+  
   
   function getDelayLogs() {
     
-    if (delayLogs.length === 0) {
+    if (delayLogDummyData.length === 0) {
       return <DelayLogGrey>You do not have DelayLog</DelayLogGrey>;
     } else {
-      return delayLogs.map(data => {
+      return delayLogDummyData.map(data => {
         return (
           <DelayLogGrey>
             <DelayLogCard data={data} />
@@ -176,7 +197,7 @@ function DelayLog() {
     <div>
       <Global />
       <DelayLogTop>
-        <DelayLogButton>Export to CSV</DelayLogButton>
+        <DelayLogButton onClick={handleExportCSV}>Export to CSV</DelayLogButton>
       </DelayLogTop>
       <DelayLogContent>
         <DelayLogListText>Your DelayLog List</DelayLogListText>
