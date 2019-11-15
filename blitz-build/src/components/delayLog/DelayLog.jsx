@@ -1,30 +1,31 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import Global from "../../styles/Global";
 
 import DelayLogCard from "./DelayLogCard";
 
 const delayLogDummyData = [
-  {
-    projectId: "orc",
-    projectName: "orc",
-    reason: "i don't know",
-    taskId: "-LtkXMRfFmz3tdS9U34Z",
-    taskName: "finish the flooring",
-    timestamp: "November 15, 2019 11:36 AM",
-    uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
-    username: "joe@smith.com"
-  },
-  {
-    projectId: "orc2",
-    projectName: "orc2",
-    reason: "i don't know",
-    taskId: "-LtkXMRfFmz3tdS9U34Z",
-    taskName: "finish painting",
-    timestamp: "November 15, 2019 11:36 AM",
-    uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
-    username: "joe@smith.com"
-  }
+  // {
+  //   projectId: "orc",
+  //   projectName: "orc",
+  //   reason: "i don't know",
+  //   taskId: "-LtkXMRfFmz3tdS9U34Z",
+  //   taskName: "finish the flooring",
+  //   timestamp: "November 15, 2019 11:36 AM",
+  //   uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
+  //   username: "joe@smith.com"
+  // },
+  // {
+  //   projectId: "orc2",
+  //   projectName: "orc2",
+  //   reason: "i don't know",
+  //   taskId: "-LtkXMRfFmz3tdS9U34Z",
+  //   taskName: "finish painting",
+  //   timestamp: "November 15, 2019 11:36 AM",
+  //   uid: "R3fE6DP3UgP8hQSWbGubsHb7lOw2",
+  //   username: "joe@smith.com"
+  // }
 ];
 
 const DelayLogTop = styled.div`
@@ -144,6 +145,33 @@ const DelayLogWhite = styled.div`
   border-radius: 3px;
 `;
 function DelayLog() {
+  const [delayLogs, setDelayLogs] = useState([]);
+  useEffect(() => {
+  axios
+    .get(`https://api-blitz-build-dev.herokuapp.com/api/auth/${localStorage.getItem("uid")}/delay_logs`)
+    .then(res => {
+      console.log(res)
+      
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }, [])
+  
+  function getDelayLogs() {
+    
+    if (delayLogs.length === 0) {
+      return <DelayLogGrey>You do not have DelayLog</DelayLogGrey>;
+    } else {
+      return delayLogs.map(data => {
+        return (
+          <DelayLogGrey>
+            <DelayLogCard data={data} />
+          </DelayLogGrey>
+        );
+      });
+    }
+  }
   return (
     <div>
       <Global />
@@ -157,13 +185,8 @@ function DelayLog() {
           <TitlesReason>Reason for Delay</TitlesReason>
           <TitlesCreatedTime>Created</TitlesCreatedTime>
         </DelayLogTableTitles>
-        {delayLogDummyData.map(data => {
-          return (
-            <DelayLogGrey>
-              <DelayLogCard data={data} />
-            </DelayLogGrey>
-          );
-        })}
+        {getDelayLogs()}
+         
       </DelayLogContent>
     </div>
   );
