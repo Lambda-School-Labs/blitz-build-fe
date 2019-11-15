@@ -85,7 +85,7 @@ const DelayLogTableTitles = styled.p`
   display: flex;
 `;
 const TitlesTask = styled.p`
-  width: 50px;
+  width: 223px;
   height: 19px;
   padding-top: 16px;
   margin-left: 32px;
@@ -98,10 +98,10 @@ const TitlesTask = styled.p`
   color: #dd6b20;
 `;
 const TitlesReason = styled.p`
-  width: 150px;
+  width: 500px;
   height: 19px;
   padding-top: 16px;
-  margin-left: 192px;
+  margin-left: 50px;
   font-family: Roboto;
 
   font-size: 16px;
@@ -111,10 +111,10 @@ const TitlesReason = styled.p`
   color: #dd6b20;
 `;
 const TitlesCreatedTime = styled.p`
-  width: 60px;
+  width: 210px;
   height: 19px;
   padding-top: 16px;
-  margin-left: 450px;
+  margin-left: 50px;
   font-family: Roboto;
 
   font-size: 16px;
@@ -151,7 +151,7 @@ function DelayLog() {
         <DelayLogButton>Export to CSV</DelayLogButton>
       </DelayLogTop>
       <DelayLogContent>
-        <DelayLogListText>Your Delay List</DelayLogListText>
+        <DelayLogListText>Your DelayLog List</DelayLogListText>
         <DelayLogTableTitles>
           <TitlesTask>Task</TitlesTask>
           <TitlesReason>Reason for Delay</TitlesReason>
