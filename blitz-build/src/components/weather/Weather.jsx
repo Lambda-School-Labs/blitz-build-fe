@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-
+import {
+  WiDaySunny,
+  WiNightClear,
+  WiRain,
+  WiSnow,
+  WiSleet,
+  WiStrongWind,
+  WiFog,
+  WiCloudy,
+  WiDayCloudy,
+  WiNightAltCloudy,
+  WiHail,
+  WiNightThunderstorm,
+  WiTornado
+} from "weather-icons-react";
 // css of the weather container in the dashboard
 const WeatherContainerD = styled.div`
   position: absolute;
@@ -26,7 +40,6 @@ const WeatherContainerP = styled.div`
   background: #ffffff;
 `;
 const Weathertitle = styled.div`
-  
   width: 530px;
   height: 40px;
   left: 878px;
@@ -42,7 +55,7 @@ const Weathertitle = styled.div`
 `;
 const WeatherTitleText = styled.div`
   padding: 12px 16px 12px 16px;
-  
+
   font-family: Roboto;
   font-size: 16px;
   line-height: 19px;
@@ -83,37 +96,36 @@ function Weather(props) {
     longitude: 0
   });
   useEffect(() => {
-  // get the latitude and longitude from the project page or navigator.geolocation.
-  if (props.usage === "project") {
-    setWeatherPosition({
-      latitude: props.latitude,
-      longitude: props.longitude
-    });
-  } else if (props.usage === "dashboard") {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        console.log(position);
-        setWeatherPosition({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        });
+    // get the latitude and longitude from the project page or navigator.geolocation.
+    if (props.usage === "project") {
+      setWeatherPosition({
+        latitude: props.latitude,
+        longitude: props.longitude
       });
-    } else {
-      console.log("geolocation is not supported");
+    } else if (props.usage === "dashboard") {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          console.log(position);
+          setWeatherPosition({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+        });
+      } else {
+        console.log("geolocation is not supported");
+      }
     }
-  }
-},[])
-  
+  }, []);
 
   // get the weather data from backend.
   useEffect(() => {
     if (weatherPosition.latitude !== 0) {
-      console.log(weatherPosition)
+      console.log(weatherPosition);
       axios
         .post(
           `https://api-blitz-build-dev.herokuapp.com/api/auth/${props.uid}/weather`,
-          weatherPosition,{headers:{token:localStorage.getItem('token')}}
-          
+          weatherPosition,
+          { headers: { token: localStorage.getItem("token") } }
         )
         .then(res => {
           setWeatherData(res.data);
@@ -153,8 +165,35 @@ function Weather(props) {
 
   // convert weather info to weather icon - not finish!
   function getWeatherIcon() {
-    var weatherIcon = weatherData.currently.icon;
-    //var weatherIcon = <IconImage src="weatherIcons/streamline-icon-weather-clouds@24x24.png" alt="cloudy"/>
+    var weatherIcon = null;
+    
+    if (weatherData.currently.icon === "clear-night") {
+      weatherIcon = <WiNightClear size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "clear-day") {
+      weatherIcon = <WiDaySunny size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "rain") {
+      weatherIcon = <WiRain size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "snow") {
+      weatherIcon = <WiSnow size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "sleet") {
+      weatherIcon = <WiSleet size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "wind") {
+      weatherIcon = <WiStrongWind size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "fog") {
+      weatherIcon = <WiFog size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "cloudy") {
+      weatherIcon = <WiCloudy size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "partly-cloudy-day") {
+      weatherIcon = <WiDayCloudy size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "partly-cloudy-night") {
+      weatherIcon = <WiNightAltCloudy size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "hail") {
+      weatherIcon = <WiHail size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "thunderstorm") {
+      weatherIcon = <WiNightThunderstorm size={110} color="#000" />;
+    } else if (weatherData.currently.icon === "tornado") {
+      weatherIcon = <WiTornado size={110} color="#000" />;
+    }
     return weatherIcon;
   }
 
