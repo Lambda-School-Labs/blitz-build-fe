@@ -150,9 +150,11 @@ function DelayLog() {
   const [delayLogs, setDelayLogs] = useState([]);
   useEffect(() => {
   axios
-    .get(`https://api-blitz-build-dev.herokuapp.com/api/auth/${localStorage.getItem("uid")}/delay_logs`)
+    .get(`https://api-blitz-build-dev.herokuapp.com/api/auth/${localStorage.getItem("uid")}/delay_logs`, { headers: { token: localStorage.getItem("token") } })
     .then(res => {
       console.log(res)
+      const delayLogsArray = Object.values(res.data);
+      setDelayLogs(delayLogsArray);
       
     })
     .catch(err => {
@@ -175,16 +177,16 @@ function DelayLog() {
         };
       const csvExporter = new ExportToCsv(options);
  
-     csvExporter.generateCsv(delayLogDummyData);
+     csvExporter.generateCsv(delayLogs);
     };
   
   
   function getDelayLogs() {
     
-    if (delayLogDummyData.length === 0) {
+    if (delayLogs.length === 0) {
       return <DelayLogGrey>You do not have DelayLog</DelayLogGrey>;
     } else {
-      return delayLogDummyData.map(data => {
+      return delayLogs.map(data => {
         return (
           <DelayLogGrey>
             <DelayLogCard data={data} />
