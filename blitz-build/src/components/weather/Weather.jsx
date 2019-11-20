@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import Global from "../../styles/Global";
 
 // css of the weather container in the dashboard
 const WeatherContainerD = styled.div`
@@ -19,7 +20,7 @@ const WeatherContainerP = styled.div`
   width: 530px;
   height: 184px;
   left: 878px;
-  top: 208px;
+  top: 168px;
   background: #ffffff;
 `;
 const Weathertitle = styled.div`
@@ -27,7 +28,7 @@ const Weathertitle = styled.div`
   width: 530px;
   height: 40px;
   left: 878px;
-  top: 168px;
+  top: 136px;
 
   background: #3f3a36;
 
@@ -108,7 +109,7 @@ function Weather(props) {
       console.log(weatherPosition)
       axios
         .post(
-          ` https://api-blitz-build-dev.herokuapp.com/api/auth/R3fE6DP3UgP8hQSWbGubsHb7lOw2/weather`,
+          `  https://blitz-build.herokuapp.com/weather`,
           weatherPosition,
           { headers: { token: localStorage.getItem("token") } }
         )
@@ -157,6 +158,7 @@ function Weather(props) {
 
   return (
     <>
+      <Global />
       {props.usage === "project" ? (
         // display in project page
         <WeatherContainerP>
