@@ -74,10 +74,11 @@ function Weather(props) {
     // If latitude and longitude are not 0 or undefined, call weather endpoint and get weather data.
     else {
       axios
-        .get(
-          ` https://blitzbuild-weather.herokuapp.com/forecast/${weatherPosition.latitude},${weatherPosition.longitude}`
-        )
+        .post(
+          ` http://44.233.184.65:3334/weather/forecast`
+        ,{'latitude':weatherPosition.latitude,'longitude':weatherPosition.longitude})
         .then(res => {
+          console.log(res)
           setWeatherData(res.data);
           //console.log("get weather data", res.data);
         })
