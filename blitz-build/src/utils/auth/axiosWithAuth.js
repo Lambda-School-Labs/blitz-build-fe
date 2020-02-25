@@ -1,10 +1,10 @@
 import axios from "axios";
 
-//https://blitz-build-production.herokuapp.com
+//http://44.233.184.65:3334
 export const axiosWithAuth = () => {
 
     return axios.create({
-        baseURL:"http://44.233.184.65:3334",
+        baseURL:"http://44.233.184.65:3443",
         headers: {
             'Ascess-Control-Origin-Allow': "*",
             user_id: localStorage.getItem("user_id"),

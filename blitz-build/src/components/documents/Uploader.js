@@ -93,10 +93,10 @@ class Uploader extends React.Component {
         project_name:this.state.project_id,
       user_id: this.state.user_id,
       file_name: this.state.file_name,
-      project_id:this.state.project_id}))
+      project_id:this.state.project_id}),
       console.log(this.state)
-
-      .catch(error => {
+)
+.catch(error => {
          console.log("ERROR ",error)
       })
     })

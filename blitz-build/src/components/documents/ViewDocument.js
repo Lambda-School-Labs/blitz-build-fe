@@ -23,8 +23,8 @@ const  ViewDocument =  (props) =>{
    
     const handlePrint =(e) =>{
       e.preventDefault();
-      window.print();
- 
+      Print()
+   
     }
    
     // function DownloadDocument() {

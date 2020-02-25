@@ -75,7 +75,7 @@ function Weather(props) {
     else {
       axios
         .post(
-          ` http://44.233.184.65:3334/weather/forecast`
+          ` http://44.233.184.65:3443/weather/forecast`
         ,{'latitude':weatherPosition.latitude,'longitude':weatherPosition.longitude})
         .then(res => {
           console.log(res)
