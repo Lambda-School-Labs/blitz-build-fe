@@ -7,7 +7,7 @@ If you want to change the API key, you need to go to darksky.net to get your own
 import React, { useState, useEffect } from "react";
 
 //axios, moment
-import axios from "axios";
+import {axiosWithAuth} from '../../utils/auth/axiosWithAuth'
 import moment from "moment";
 
 //components
@@ -73,9 +73,9 @@ function Weather(props) {
     }
     // If latitude and longitude are not 0 or undefined, call weather endpoint and get weather data.
     else {
-      axios
+      axiosWithAuth()
         .post(
-          ` http://44.233.184.65:3443/weather/forecast`
+          `/weather/forecast`
         ,{'latitude':weatherPosition.latitude,'longitude':weatherPosition.longitude})
         .then(res => {
           console.log(res)

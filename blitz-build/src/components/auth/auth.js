@@ -12,7 +12,7 @@ class Auth {
     audience: "https://gannondarcy2.auth0.com/userinfo",
     clientID: "OzMg1e7JDNF7DogxPEPvGzpG7fvvDHNe",
     //redirect is an environment variable
-    redirectUri: "https://blitz-build-fe.now.sh/callback",
+    redirectUri: "https://blitzbuild.construction/callback",
     responseType: "id_token",
     scope: "openid profile"
   });
